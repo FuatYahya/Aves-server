@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-&nw#0@hk7d3i3uw3b213qvw9iy5!r)gh@&-7p05o0vsyiqb)#o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'febd-197-156-86-163.ngrok.io']
 
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -50,8 +50,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 2
 }
 
+# Change access token expire time to 10 min on production
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
@@ -157,6 +158,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

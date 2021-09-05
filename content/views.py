@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import ContentSerializer
-from utils import Util
+from helpers.utils import Util
 from .models import Content
 from .permissions import IsOwner
 

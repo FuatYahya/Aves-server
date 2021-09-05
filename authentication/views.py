@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .serializer import RegisterSerializer, VerifyEmailSerializer, LoginSerializer, LogoutSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
-from utils import Util
+from helpers.utils import Util
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from django.conf import settings

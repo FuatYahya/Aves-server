@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     balance = models.DecimalField(max_digits=10, default=0, decimal_places=2)
-    # image = models.ImageField(upload_to='profile_images')
+    image = models.ImageField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

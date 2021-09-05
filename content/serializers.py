@@ -1,5 +1,6 @@
 from django.core.validators import DecimalValidator
 from rest_framework import serializers
+from rest_framework.fields import ImageField
 from .models import Content
 from authentication.models import User
 
@@ -10,18 +11,16 @@ class ContentSerializer(serializers.ModelSerializer):
     '''
     id = serializers.UUIDField(read_only=True)
     name = serializers.CharField(max_length=50, min_length=3)
+    # size = serializers.IntegerField(read_only=True)
     owner = serializers.PrimaryKeyRelatedField(
         read_only=True)
+    is_preview = serializers.BooleanField(read_only=True)
+    likes = serializers.IntegerField(read_only=True)
+    views = serializers.IntegerField(read_only=True)
+    image = serializers.ImageField(read_only=True)
+    file = serializers.FileField(read_only=True)
 
     class Meta:
         model = Content
         fields = ['id', 'name', 'size', 'description',
-                  'price', 'key', 'nonce', 'type', 'category', 'owner', 'tag']
-
-    # def validate(self, attrs):
-    #     id = attrs.get('id', '')
-    #     # todo: add validators for key and nonce after hashing(
-    #     print(id)
-    #     if not len(id) == 16:
-    #         raise TypeError('ID is not supported')
-    #     return attrs
+                  'price', 'is_preview', 'type', 'category', 'image', 'file', 'likes', 'views', 'owner', 'tags']

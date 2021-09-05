@@ -1,9 +1,16 @@
 from django.db import models
 from django.db.models.fields import CharField
+from django.db.models.fields.files import FileField
 from authentication.models import User
+from helpers.utils import Util
 
 
-class Tag(models.Model):
+def get_file(instance, filename):
+    return '/'.join(
+        ['content', 'images', f'{str(instance.pk)}.{Util.get_filetype(filename)}'])
+
+
+class Tags(models.Model):
     tag = models.CharField(max_length=50)
 
     def __str__(self) -> str:
@@ -36,12 +43,18 @@ class Content(models.Model):
         max_length=25, choices=CHOICES_TYPE, blank=False, null=False)
     category = models.CharField(
         max_length=25, choices=CHOICES_CATEGORY, blank=False, null=False)
-    tag = models.ManyToManyField(to=Tag)
-    # image = models.ImageField(blank=False, null=False)
-    is_preview = models.BooleanField(default=False)
+    tags = models.ManyToManyField(to=Tags)
+    image = models.ImageField(null=True, blank=True)
+    upload = models.FileField(null=True, blank=True)
+    content = models.FileField(null=True, blank=True)
+    preview = models.FileField(null=True, blank=True)
     owner = models.ForeignKey(
         to=User, on_delete=models.DO_NOTHING)
     likes = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+    is_finished = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
